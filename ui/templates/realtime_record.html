@@ -1,0 +1,273 @@
+{% extends 'base.html' %}
+
+{% block main-body %}
+  {% load static %}
+<style>
+    /* Style the video: 100% width and height to cover the entire window */
+    #myVideo {
+        position: fixed;
+        right: 0;
+        bottom: 0;
+        min-width: 100%;
+        min-height: 100%;
+    }
+
+    /* Add some content at the bottom of the video/page */
+    .content {
+        margin-top: 10rem;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        color: #f1f1f1;
+        width: 100%;
+        padding: 20px;
+    }
+
+    /* Style the button used to pause/play the video */
+    #myBtn {
+        width: 200px;
+        font-size: 18px;
+        padding: 10px;
+        border: none;
+        background: #000;
+        color: #fff;
+        cursor: pointer;
+    }
+
+    #myBtn:hover {
+        background: #ddd;
+        color: black;
+    }
+
+    .open-button {
+  background-color: #555;
+  color: white;
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  opacity: 0.8;
+  position: fixed;
+  bottom: 23px;
+  right: 28px;
+  width: 280px;
+}
+
+/* The popup form - hidden by default */
+.form-popup {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  right: 15px;
+  border: none;
+  z-index: 9;
+}
+
+/* Add styles to the form container */
+.form-container {
+  max-width: 300px;
+  padding: 10px;
+  background-color: rgb(0 0 0 / 79%);;
+}
+
+/* Full-width input fields */
+.form-container input[type=text], .form-container input[type=password] {
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  border: none;
+  background: #f1f1f1;
+}
+
+/* When the inputs get focus, do something */
+.form-container input[type=text]:focus, .form-container input[type=password]:focus {
+  background-color: #ddd;
+  outline: none;
+  color: black;
+  font-weight: 500;
+}
+
+/* Set a style for the submit/login button */
+.form-container .btn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  margin-bottom:10px;
+  opacity: 0.8;
+}
+
+/* Add a red background color to the cancel button */
+.form-container .cancel {
+  background-color: red;
+}
+
+/* Add some hover effects to buttons */
+.form-container .btn:hover, .open-button:hover {
+  opacity: 1;
+}
+.back{
+  background-color: #04AA6D;
+  color: white;
+  padding:1rem;
+  position:absolute;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.back:hover{
+  background-color: #ddd;
+  color: black;
+}
+#recordButton{
+    background: green;
+    width:10rem !important;
+    padding:0.5rem;
+    font-weight: 700;
+}
+#pauseButton{
+    background: rgb(201, 149, 6);
+    width:10rem !important;
+    padding:0.5rem;
+    font-weight: 700;
+}
+#stopButton{
+    background: rgb(216, 6, 6);
+    width:10rem !important;
+    padding:0.5rem;
+    font-weight: 700;
+}
+#recordingsList li a{
+  color: #000;
+  font-size: larger;
+  font-weight: 600;
+}
+#recordingsList li a:hover{
+  color: rgba(0, 0, 0, 0.685);
+  font-size: larger;
+  font-weight: 600;
+}
+</style>
+
+
+<!-- Optional: some overlay text to describe the video -->
+<div class="content">
+    <br><br>
+  <!--  <h1>Predicted Emotion</h1> -->
+    <div class="row">
+        <div class="col-8">
+    <div id="users"></div>
+<!--    <button id="button" class="btn btn-info">Check Emotion</button>-->
+<!--    <button id="button1" class="btn btn-success">Check Age range</button>-->
+<!--    <button id="button2" class="btn btn-warning">Check Intonation</button>-->
+<!--    <button id="button3" class="btn btn-danger">Check Phonemes</button>-->
+</div>
+        <div class="col-4">
+            <div class="container">
+      <h1>recoder</h1>
+       <div id="controls">
+  	 <button id="recordButton">Record</button>
+  	 <button id="pauseButton" disabled>Pause</button>
+  	 <button id="stopButton" disabled>Stop</button>
+    </div>
+    <div id="formats">Format: start recording to see sample rate</div>
+  	<p><strong>Recordings:</strong></p>
+  	<ol id="recordingsList"></ol>
+    <!-- inserting these scripts at the end to be able to use all the elements in the DOM -->
+  	<script src="https://cdn.rawgit.com/mattdiamond/Recorderjs/08e7abd9/dist/recorder.js"></script>
+  	<script src="{% static 'js/recorder.js' %}"></script>
+
+    </div>
+            </div>
+        </div>
+    <div class="form-popup" id="myForm">
+  <form class="form-container">
+    <h1 style="color:#fff;">Add Record</h1>
+
+    <!-- <label for="email"><b>Patient</b></label> -->
+    <select name="patient" id="patient" style="width: 100%;font-weight: 500;
+    padding: 1.5rem;color:black;">
+      <option value="">Select Patient</option>
+        {% for p in patient_list %}
+        <option value="{{p.id}}">{{p.id}} - {{p.name}}</option>
+        {% endfor %}
+    </select>
+
+    <!-- <label for="cmnt"><b>comments</b></label> -->
+    <input type="text" name="cmnt" id="cmnt" placeholder="Add comment">
+
+    <button type="submit" class="btn" id="add_record">ADD</button>
+    <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+  </form>
+</div>
+    <script>
+        document.getElementById('button').addEventListener('click', loadUsers);
+        function vidio_click(){
+            var vid = document.getElementById("myVideo");
+
+            var isVideoPlaying = !!(vid.currentTime > 0 && !vid.paused && !vid.ended && vid.readyState > 2);
+            if (isVideoPlaying){
+                vid.pause();
+            }else{
+                vid.play();
+            };
+
+
+//            console.log(isVideoPlaying);
+        };
+        // Load Github Users
+        function loadUsers(){
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', 'http://127.0.0.1:5000/classify/emotion', true);
+
+            xhr.onload = function(){
+                if(this.status == 200){
+                    var users = JSON.parse(this.responseText);
+                    console.log(users)
+                    var output ='<div class="user">' +
+                        '<img src="img/character.png" width="70" height="70">' +
+                        '<ul>' +
+                        '<li>Predicted Emotion: '+users.label+'</li>' +
+                        '<li>Probablility: '+users.score+'</li>' +
+                        '</ul>' +
+                        '</div>';
+
+
+                    document.getElementById('users').innerHTML = output;
+                }
+            }
+
+            xhr.send();
+        }
+
+        function backend_call(){
+            var xhr1 = new XMLHttpRequest();
+            xhr1.open('POST', 'http://127.0.0.1:8000/api/audio', true);
+            var xhr2 = new XMLHttpRequest();
+            xhr2.open('GET', 'http://127.0.0.1:9000/api/audio', true);
+
+            xhr.onload = function(){
+                if(this.status == 200){
+                    var users = JSON.parse(this.responseText);
+                    console.log(users)
+                    var output ='<div class="user">' +
+                        '<img src="img/character.png" width="70" height="70">' +
+                        '<ul>' +
+                        '<li>Predicted Emotion: '+users.label+'</li>' +
+                        '<li>Probablility: '+users.score+'</li>' +
+                        '</ul>' +
+                        '</div>';
+
+
+                    document.getElementById('users').innerHTML = output;
+                }
+            }
+
+            xhr.send();
+        }
+        function closeForm() {
+  document.getElementById("myForm").style.display = "none";
+}
+
+    </script>
+</div>
+{% endblock %}

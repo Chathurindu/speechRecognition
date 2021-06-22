@@ -1,0 +1,144 @@
+
+<style>
+  #myInput {
+  background-image: url('/css/searchicon.png');
+  background-position: 10px 10px;
+  background-repeat: no-repeat;
+  width: 75%;
+  font-size: 18px;
+  padding: 10px 10px 10px 10px;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
+}
+</style>
+
+<script type="text/javascript">
+
+  function handleClick(evt) {
+    var node = evt.target || evt.srcElement;
+    if (node.name == 'edit') {
+      node.value = "Modify";
+    }
+  }
+  
+</script>
+{% extends 'base.html' %}
+
+{% block main-body %}
+  {% load static %}
+
+    <section id="intro1" class="intro"><br><br><br><br><br>
+      <!--<div class="intro-content paddingbot-50">-->
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="wow fadeInDown" data-wow-offset="0" data-wow-delay="0.1s">
+
+
+            </div>
+            <div class="wow fadeInUp" data-wow-offset="0" data-wow-delay="0.1s">
+
+              <div class="well well-trans">
+                <div class="wow fadeInRight" data-wow-delay="0.1s">
+
+                  <h2>Patient's Details</h2>
+
+                  <br>
+                  <p>
+                    Name : {{childName}} <br>
+                    parent Name : {{parentName}} <br>
+                    reference : {{reference}} <br>
+
+                  </p>
+                  <br>
+
+                </div>
+              </div>
+
+
+            </div>
+
+            <!--</div>-->
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Section: intro -->
+    <section id="intro" class="intro"><br><br>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="wow fadeInDown" data-wow-offset="0" data-wow-delay="0.1s">
+
+
+            </div>
+            <div class="wow fadeInUp" data-wow-offset="0" data-wow-delay="0.1s">
+
+              <div class="well well-trans">
+                <div class="wow fadeInRight" data-wow-delay="0.1s">
+
+                  <h2>Patient's Previous Records</h2>
+                  
+                  <br>
+                  <table id="myTable" style="width: 100%;">
+                    <tr>
+                      <th>Record No</th>
+                      <th>Exercise</th>
+                      <th>Audio</th>
+                      <th>Emotion</th>
+                      <th>Word Behaviour</th>
+                      <th>Age</th>
+                      <th>Phonemes</th>
+                    </tr>
+                    {% for r in record_list %}
+                    <tr>
+                      <th>{{r.id}}</th>
+                      <th>{{r.exe}}</th>
+                      <th>Audio</th>
+                      <th>Emotion</th>
+                      <th>Word Behaviour</th>
+                      <th>Age</th>
+                      <th>Phonemes</th>
+                    </tr>
+                    {% endfor %}
+
+                     
+                  </table>
+                  <script>
+                    function myFunction() {
+                      var input, filter, table, tr, td, i, txtValue;
+                      input = document.getElementById("myInput");
+                      filter = input.value.toUpperCase();
+                      table = document.getElementById("myTable");
+                      tr = table.getElementsByTagName("tr");
+                      for (i = 0; i < tr.length; i++) {
+                        td = tr[i].getElementsByTagName("td")[1];
+                        if (td) {
+                          txtValue = td.textContent || td.innerText;
+                          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                            tr[i].style.display = "";
+                          } else {
+                            tr[i].style.display = "none";
+                          }
+                        }       
+                      }
+                    }
+                    </script>
+                  <br>
+                  
+                </div>
+              </div>
+
+
+            </div>
+
+            <!--</div>-->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- /Section: intro -->
+
+
+{% endblock %}

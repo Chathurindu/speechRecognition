@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block main-body %}
+  {% load static %}
+<br>
+    <br>
+    <br>
+    <br>
+<div class="col-lg-6" style="left: 25%;">
+    <div class="form-wrapper" style="align-items: center;">
+        <br>
+    <div class="wow fadeInRight" data-wow-duration="2s" data-wow-delay="0.2s">
+
+        <div class="panel panel-skin">
+        <div class="panel-heading">
+                <h3 class="panel-title"><span class="fa fa-pencil-square-o"></span> Manual Upload <small></small></h3>
+                </div>
+                <div class="panel-body">
+                <form class="lead" method="post" enctype="multipart/form-data" action="/api/add_record_api">
+                    <div class="row">
+                        <div class="col-xs-6 col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <label>Select the patient</label>
+                                <select name="patient" id="patient" class="form-control input-md">
+        {% for p in patient_list %}
+        <option value="{{p.id}}">{{p.id}} - {{p.name}}</option>
+        {% endfor %}
+    </select>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <label>Audio</label>
+                                <input type="file" name="file" id="file" class="form-control input-md">
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <label>Comment</label>
+                                <input type="text" name="comment" id="comment" class="form-control input-lg">
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <input type="submit" value="Upload" class="btn btn-skin btn-block btn-lg">
+
+
+                </form>
+            </div>
+        </div>
+
+    </div>
+    </div>
+</div>
+
+        {% endblock %}

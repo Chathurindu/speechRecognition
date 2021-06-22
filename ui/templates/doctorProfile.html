@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block main-body %}
+  {% load static %}
+
+  <br><br><br>
+
+  <section id="intro3" class="intro">
+    <div class="intro-content">
+        <div class="container">
+
+            <div class="hero-section section overlay" style="background-image: url('img/bg.jpg')"></div>
+            <div class="container">
+                <div class="row">
+                    <div class="hero-content text-center col-xs-13">
+                        <div class="cbp-singlePage cbp-l-grid-team-name" style="font-size: 30px;">Check Child Status
+                        </div></br>
+                        <div class="cbp-singlePage cbp-l-grid-team-name" style="font-size: 25px;">Dedicated pathologists who are willing to help you and provide their best. </div>
+                        <p></p>
+                        <br>
+                        <!--<h3><strong>Sinhala Speech Recognition System </strong> Welcome to Child Care </h3>
+                    <a class="buy-btn" href="#demo">View Demo</a>-->
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+</section>
+
+        <!-- Section: team -->
+        <section id="doctor" class="home-section bg-gray paddingbot-60" style="padding-top: 50px;">
+            <div class="row" style="display: flex;justify-content: space-between;">
+                <div class="col-4"><a href="/realtime"><button class="btn btn-skin btn-lg">Real-Time Checking</button></a></div>
+                <div class="col-4"><a href="/add_record"><button class="btn btn-skin btn-lg" id="myBtn">Manual Checking</button></a></div>
+
+
+                </div>
+            <div class="row">
+            <div class="container marginbot-50">
+                <div class="row">
+
+                            <div class="wow fadeInDown" data-wow-delay="0.1s">
+                                <div class="section-heading text-center">
+                                    <h2 class="h-bold">Exercises</h2>
+                                    <p>Many tests are available to diagnose speech disorders.
+                                    <p class="text-center wow bounceIn" data-wow-delay="0.4s">
+                                        <a href="/patient_list" class="btn btn-skin btn-lg">Patient List <i
+                                                class="fa fa-angle-right"></i></a>
+                                    </p>&nbsp;&nbsp;
+                                    <p class="text-center wow bounceIn" data-wow-delay="0.4s">
+                                        <a href="/video_exercise_list" class="btn btn-skin btn-lg">Exercise | Video<i
+                                                class="fa fa-angle-right"></i></a>
+                                    </p>
+                                    </p>&nbsp;&nbsp;
+                                    <p class="text-center wow bounceIn" data-wow-delay="0.4s">
+                                        <a href="/photo_exercise_list" class="btn btn-skin btn-lg">Exercise | Photo<i
+                                                class="fa fa-angle-right"></i></a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+            </div>
+</div>
+        </section>
+
+{% endblock %}

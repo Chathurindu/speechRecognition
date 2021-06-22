@@ -1,0 +1,32 @@
+version: "3.3"
+
+services:
+  age:
+    build: ./age
+    command: python manage.py runserver 0.0.0.0:9000
+    ports:
+      - "9000:9000"
+    volumes:
+      - ./age:/code
+      - media:/code/media
+  emo:
+    build: ./age
+    command: python manage.py runserver 0.0.0.0:9090
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./age:/code
+      - media:/code/media
+  web:
+    build: ./ui
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./ui:/code
+      - media:/code/media
+    ports:
+      - "8000:8000"
+    # depends_on:
+    #     - db
+
+volumes:
+  media:

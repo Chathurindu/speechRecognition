@@ -1,0 +1,86 @@
+<style>
+		table {
+			font-family: arial, sans-serif;
+			border-collapse: collapse;
+			width: 100%;
+		}
+
+		td,
+		th {
+			border: 1px solid #dddddd;
+			text-align: left;
+			padding: 8px;
+		}
+
+		tr:nth-child(even) {
+			background-color: #dddddd;
+		}
+	</style>
+{% extends 'base.html' %}
+
+{% block main-body %}
+  {% load static %}
+<br>
+<br>
+<br>
+<br>
+<br>
+		<!-- Section: intro --><div style="height:5rem;"><button type="button" class="btn btn-info float-right"> <a href="/add_video_exercise" style="color:#fff;">Add Video Exercise</a></button></div>
+		{% for v in videoList %}
+<section class="intro">
+
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-6">
+						<br>
+						<div class="wow fadeInDown" data-wow-offset="0" data-wow-delay="0.1s">
+							<h2 class="h-ultra">{{ v.name }}</h2>
+						</div>
+						<div class="wow fadeInUp" data-wow-offset="0" data-wow-delay="0.1s">
+							<h5 class="h-light">Type - {{ v.category }}</h5>
+						</div>
+						<div class="well well-trans">
+							<div class="wow fadeInRight" data-wow-delay="0.1s">
+
+								<ul class="lead-list">
+
+									<li><span class="fa fa-check fa-2x icon-success"></span> <span
+											class="list"><strong>Age Range</strong><br />
+											{{v.age}} years</span></li>
+									<li><span class="fa fa-check fa-2x icon-success"></span> <span
+											class="list"><strong>Emotion Type</strong><br />{{v.emotion}}</span></li>
+									<li><span class="fa fa-check fa-2x icon-success"></span> <span
+											class="list"><strong>Word Behaviour</strong><br />{{v.intonation}}</span></li>
+									<li><span class="fa fa-check fa-2x icon-success"></span> <span
+											class="list"><strong>Phonemes</strong><br />{{ v.phoneme }}</span></li>
+								</ul>
+								<p class="text-right wow bounceIn" data-wow-delay="0.4s">
+									<a href="/exercise/{{v.id}}" class="btn btn-skin btn-lg">Start Exercise <i
+											class="fa fa-angle-right"></i></a>
+								</p>
+							</div>
+						</div>
+
+
+					</div>
+					<div class="col-lg-6">
+						<br>
+						<br>
+						<br>
+						<br>
+						<br>
+						<div class="embed-responsive embed-responsive-4by3">
+							<!-- The video -->
+							<video autoplay muted loop id="myVideo">
+								<source src={{ v.file }} type="video/mp4">
+							</video>
+
+						</div>
+					</div>
+				</div>
+			</div>
+	</div>
+		</section>
+
+{% endfor %}
+{% endblock%}

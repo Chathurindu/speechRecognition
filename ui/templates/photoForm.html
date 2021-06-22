@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block main-body %}
+  {% load static %}
+<br>
+<br>
+<br>
+<br>
+
+
+    <div class="col-lg-6" style="left: 25%;">
+    <div class="form-wrapper">
+        <br>
+    <div class="wow fadeInRight" data-wow-duration="2s" data-wow-delay="0.2s">
+    
+        <div class="panel panel-skin">
+        <div class="panel-heading">
+                <h3 class="panel-title"><span class="fa fa-pencil-square-o"></span> Add New Photo <small></small></h3>
+                </div>
+                <div class="panel-body">
+                <form method="post" enctype="multipart/form-data" class="lead" action="/api/add_exercise?type=photo">
+                    <div class="row">
+                        <div class="col-xs-6 col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <label>Photo Name</label>
+                                <input type="text" name="name" id="name" class="form-control input-md" required>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <label>Photo Type</label>
+                                <input type="text" name="category" id="category" class="form-control input-md" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-6 col-sm-6 col-md-12">
+                            <div class="form-group">
+                                <label>Child's Age Range</label>
+                                <input type="number" name="age" id="age" class="form-control input-md" required>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-12">
+                            <div class="form-group">
+                                <label>Suitable Emotions</label>
+                                <input type="text" name="emotion" id="emotion" class="form-control input-md" required>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-12">
+                            <div class="form-group">
+                                <label>Suitable Word Behaviours</label>
+                                <input type="text" name="intonations" id="intonations" class="form-control input-md" required>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-12">
+                            <div class="form-group">
+                                <label>Suitable Phoneme examples</label>
+                                <input type="text" name="phoneme" id="phoneme" class="form-control input-md" required>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <label>Upload Photo</label>
+                                <input type="file" name="file" id="file" class="form-control input-md" required>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <br>
+                    <input type="submit" value="Submit" class="btn btn-skin btn-block btn-lg">
+                
+                
+                </form>
+            </div>
+        </div>				
+    
+    </div>
+    <a href="#" class="scrollup"><i class="fa fa-angle-up active"></i></a>
+    </div>
+    </div>
+        {% endblock %}
